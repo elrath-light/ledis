@@ -2,6 +2,10 @@ package me.ledis.factory;
 
 import me.ledis.executor.*;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.server.ResponseStatusException;
+
+import static me.ledis.constant.ResponseMessage.UNSUPPORTED_COMMAND_MESSAGE;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 public class CommandExecutorFactory {
     public CommandExecutor createByCommand(String command) {
@@ -51,8 +55,8 @@ public class CommandExecutorFactory {
             case "RESTORE":
                 return new SnapshotRestoreLastCommandExecutor(commandSegments);
             default:
-                return null;
-                //throw shit;
+                String unsupportedCommandMessage = String.format(UNSUPPORTED_COMMAND_MESSAGE, commandName);
+                throw new ResponseStatusException(BAD_REQUEST, unsupportedCommandMessage);
         }
     }
 }

@@ -1,7 +1,6 @@
 package me.ledis.controller;
 
 import me.ledis.CommandService;
-import me.ledis.data.LedisData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +18,6 @@ public class CommandController {
 
     @PostMapping("/run")
     public String run(@RequestBody String command) {
-        LedisData.set("1", "Abc");
-        return "";
+        return service.execute(command);
     }
 }
