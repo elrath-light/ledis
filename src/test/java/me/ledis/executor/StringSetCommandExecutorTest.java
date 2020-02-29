@@ -23,10 +23,10 @@ public class StringSetCommandExecutorTest extends LedisTest {
         assertThat(me).isInstanceOf(String.class);
         assertThat(me).isEqualTo("Good");
 
-        executor = getFactory().createByCommand("SET me Better");
+        executor = getFactory().createByCommand("SET me Better everyday");
         executor.execute();
         Object newMe = LedisData.get("me");
-        assertThat(newMe).isEqualTo("Better");
+        assertThat(newMe).isEqualTo("Better everyday");
     }
 
     @Test
@@ -37,11 +37,6 @@ public class StringSetCommandExecutorTest extends LedisTest {
                 .hasMessageContaining(STRING_SET_SYNTAX_ERROR_MESSAGE);
 
         executor = getFactory().createByCommand("set bad");
-        assertThatThrownBy(() -> executor.execute())
-                .isInstanceOf(ResponseStatusException.class)
-                .hasMessageContaining(STRING_SET_SYNTAX_ERROR_MESSAGE);
-
-        executor = getFactory().createByCommand("set bad bad bad");
         assertThatThrownBy(() -> executor.execute())
                 .isInstanceOf(ResponseStatusException.class)
                 .hasMessageContaining(STRING_SET_SYNTAX_ERROR_MESSAGE);

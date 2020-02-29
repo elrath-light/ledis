@@ -18,6 +18,7 @@ public class DataCleanUpCommandExecutor extends CommandExecutor {
             throw new ResponseStatusException(BAD_REQUEST, FLUSHDB_SYNTAX_ERROR_MESSAGE);
         }
         LedisData.clear();
+        LedisData.clearAllExpireTime();
         return OK_MESSAGE;
     }
 }

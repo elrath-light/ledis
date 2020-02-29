@@ -103,4 +103,8 @@ public class LedisData {
     public static Set<String> getAllKeyWithTimeout() {
         return keyExpireTime.keySet();
     }
+
+    public static void clearAllExpireTime() {
+        keyExpireTime.clear();
+    }
 }

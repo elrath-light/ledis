@@ -20,7 +20,10 @@ public class DataSetKeyTimeoutCommandExecutorTest extends LedisTest {
         assertThat(executor.execute())
                 .isEqualTo("1");
         Thread.sleep(2000L);
-        assertThat(LedisData.get("mySet"))
+        String mySetKey = "mySet";
+        assertThat(LedisData.get(mySetKey))
+                .isNull();
+        assertThat(LedisData.getExpireTime(mySetKey))
                 .isNull();
     }
 

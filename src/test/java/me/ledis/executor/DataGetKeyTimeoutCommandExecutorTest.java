@@ -8,12 +8,12 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDateTime;
 
 import static me.ledis.constant.ResponseMessage.*;
-import static me.ledis.constant.ResponseMessage.DEL_SYNTAX_ERROR_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class DataGetKeyTimeoutCommandExecutorTest extends LedisTest {
     private CommandExecutor executor;
+
     @Test
     public void expire_time_for_key_should_be_retrieved_correctly() {
         initSampleSet();
@@ -22,6 +22,11 @@ public class DataGetKeyTimeoutCommandExecutorTest extends LedisTest {
         executor = getFactory().createByCommand("TTL mySet");
         assertThat(executor.execute())
                 .isEqualTo(String.format(KEY_WILL_BE_REMOVED_AT_MESSAGE, expireTime));
+
+        initSampleList();
+        executor = getFactory().createByCommand("TTL elements");
+        assertThat(executor.execute())
+                .isEqualTo(NO_TIMEOUT_MESSAGE);
     }
 
     @Test

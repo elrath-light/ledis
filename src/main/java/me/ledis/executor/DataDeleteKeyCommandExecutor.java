@@ -18,6 +18,7 @@ public class DataDeleteKeyCommandExecutor extends CommandExecutor {
         }
         String key = getCommandSegments()[1];
         Object removedValue = LedisData.remove(key);
+        LedisData.removeExpireTime(key);
         return removedValue == null ? KEY_IS_NOT_EXISTED_MESSAGE : OK_MESSAGE;
     }
 }

@@ -30,6 +30,7 @@ public final class ResponseMessage {
     public static final String KEY_IS_NOT_SET_ERROR_MESSAGE = "ERROR: The given key is not a set";
     public static final String KEY_IS_NOT_EXISTED_MESSAGE = "Key is not existed";
     public static final String KEY_WILL_BE_REMOVED_AT_MESSAGE = "Key will be removed at %s";
+    public static final String NO_TIMEOUT_MESSAGE = "No timeout";
     private ResponseMessage() {
     }
 }

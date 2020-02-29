@@ -23,6 +23,9 @@ public class DataGetKeyTimeoutCommandExecutor extends CommandExecutor {
             return KEY_IS_NOT_EXISTED_MESSAGE;
         }
         LocalDateTime expireTime = LedisData.getExpireTime(key);
+        if (expireTime == null) {
+            return NO_TIMEOUT_MESSAGE;
+        }
         return String.format(KEY_WILL_BE_REMOVED_AT_MESSAGE, expireTime);
     }
 }

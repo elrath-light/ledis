@@ -5,6 +5,8 @@ import me.ledis.data.LedisData;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
+
 import static me.ledis.constant.ResponseMessage.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -16,10 +18,14 @@ public class DataDeleteKeyCommandExecutorTest extends LedisTest {
     @Test
     public void key_and_its_corresponding_value_should_be_removed_correctly() {
         initSampleList();
+        String myListKey = "elements";
+        LedisData.setExpireTime(myListKey, LocalDateTime.now().plusHours(1));
         executor = getFactory().createByCommand("DEL elements");
         assertThat(executor.execute())
                 .isEqualTo(OK_MESSAGE);
-        assertThat(LedisData.get("elements"))
+        assertThat(LedisData.get(myListKey))
+                .isNull();
+        assertThat(LedisData.getExpireTime(myListKey))
                 .isNull();
     }
 
