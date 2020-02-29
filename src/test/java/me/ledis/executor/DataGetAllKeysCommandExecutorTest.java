@@ -25,7 +25,7 @@ public class DataGetAllKeysCommandExecutorTest extends LedisTest {
     public void exception_should_be_thrown_when_syntax_is_incorrect() {
         executor = getFactory().createByCommand("KEYS a");
         assertThatThrownBy(() -> executor.execute())
-                .withFailMessage(KEYS_SYNTAX_ERROR_MESSAGE)
+                .hasMessageContaining(KEYS_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }
 }

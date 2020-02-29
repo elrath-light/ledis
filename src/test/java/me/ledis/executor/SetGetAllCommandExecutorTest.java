@@ -28,7 +28,7 @@ public class SetGetAllCommandExecutorTest extends LedisTest {
         initSampleList();
         executor = getFactory().createByCommand("SMEMBERS elements");
         assertThatThrownBy(() -> executor.execute())
-                .withFailMessage(KEY_IS_NOT_SET_ERROR_MESSAGE)
+                .hasMessageContaining(KEY_IS_NOT_SET_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }
 
@@ -36,7 +36,7 @@ public class SetGetAllCommandExecutorTest extends LedisTest {
     public void exception_should_be_thrown_when_syntax_is_incorrect() {
         executor = getFactory().createByCommand("SMEMBERS a b");
         assertThatThrownBy(() -> executor.execute())
-                .withFailMessage(SMEMBERS_SYNTAX_ERROR_MESSAGE)
+                .hasMessageContaining(SMEMBERS_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }
 }

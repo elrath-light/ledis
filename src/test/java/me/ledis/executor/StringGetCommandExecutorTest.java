@@ -27,12 +27,12 @@ public class StringGetCommandExecutorTest extends LedisTest {
     public void exception_should_be_thrown_when_syntax_is_incorrect() {
         getCommandExecutor = getFactory().createByCommand("GET a b");
         assertThatThrownBy(() -> getCommandExecutor.execute())
-                .withFailMessage(STRING_GET_SYNTAX_ERROR_MESSAGE)
+                .hasMessageContaining(STRING_GET_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
 
         getCommandExecutor = getFactory().createByCommand("GET");
         assertThatThrownBy(() -> getCommandExecutor.execute())
-                .withFailMessage(STRING_GET_SYNTAX_ERROR_MESSAGE)
+                .hasMessageContaining(STRING_GET_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }
 }

@@ -31,7 +31,7 @@ public class SetLengthCommandExecutorTest extends LedisTest {
         initSampleList();
         executor = getFactory().createByCommand("SCARD elements");
         assertThatThrownBy(() -> executor.execute())
-                .withFailMessage(KEY_IS_NOT_SET_ERROR_MESSAGE)
+                .hasMessageContaining(KEY_IS_NOT_SET_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }
 
@@ -39,7 +39,7 @@ public class SetLengthCommandExecutorTest extends LedisTest {
     public void exception_should_be_thrown_when_syntax_is_incorrect() {
         executor = getFactory().createByCommand("SCARD a b");
         assertThatThrownBy(() -> executor.execute())
-                .withFailMessage(SCARD_SYNTAX_ERROR_MESSAGE)
+                .hasMessageContaining(SCARD_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }
 }

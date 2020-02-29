@@ -31,12 +31,12 @@ public class ListPollLastCommandExecutorTest extends LedisTest {
     public void exception_should_be_thrown_when_syntax_is_incorrect() {
         executor = getFactory().createByCommand("RPOP");
         assertThatThrownBy(() -> executor.execute())
-                .withFailMessage(RPOP_SYNTAX_ERROR_MESSAGE)
+                .hasMessageContaining(RPOP_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
 
         executor = getFactory().createByCommand("RPOP key value");
         assertThatThrownBy(() -> executor.execute())
-                .withFailMessage(RPOP_SYNTAX_ERROR_MESSAGE)
+                .hasMessageContaining(RPOP_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }
 }

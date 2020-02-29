@@ -42,7 +42,7 @@ public class ListLengthCommandExecutorTest extends LedisTest {
         LedisData.set("mySet", mySet);
         executor = getFactory().createByCommand("LLEN mySet");
         assertThatThrownBy(() -> executor.execute())
-                .withFailMessage(KEY_IS_NOT_LIST_ERROR_MESSAGE)
+                .hasMessageContaining(KEY_IS_NOT_LIST_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }
 
@@ -50,12 +50,12 @@ public class ListLengthCommandExecutorTest extends LedisTest {
     public void exception_should_be_thrown_when_syntax_is_incorrect() {
         executor = getFactory().createByCommand("LLEN a b");
         assertThatThrownBy(() -> executor.execute())
-                .withFailMessage(LLEN_SYNTAX_ERROR_MESSAGE)
+                .hasMessageContaining(LLEN_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
 
         executor = getFactory().createByCommand("LLEN");
         assertThatThrownBy(() -> executor.execute())
-                .withFailMessage(LLEN_SYNTAX_ERROR_MESSAGE)
+                .hasMessageContaining(LLEN_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }
 }

@@ -33,9 +33,9 @@ public class ListAddCommandExecutorTest extends LedisTest {
         Set<String> mySet = new HashSet<>();
         mySet.add("one");
         LedisData.set("mySet", mySet);
-        executor = getFactory().createByCommand("RPUSH mySet");
+        executor = getFactory().createByCommand("RPUSH mySet a");
         assertThatThrownBy(() -> executor.execute())
-                .withFailMessage(KEY_IS_NOT_LIST_ERROR_MESSAGE)
+                .hasMessageContaining(KEY_IS_NOT_LIST_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }
 
@@ -43,12 +43,12 @@ public class ListAddCommandExecutorTest extends LedisTest {
     public void exception_should_be_thrown_when_syntax_is_incorrect() {
         executor = getFactory().createByCommand("RPUSH myList");
         assertThatThrownBy(() -> executor.execute())
-                .withFailMessage(RPUSH_SYNTAX_ERROR_MESSAGE)
+                .hasMessageContaining(RPUSH_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
 
         executor = getFactory().createByCommand("RPUSH");
         assertThatThrownBy(() -> executor.execute())
-                .withFailMessage(RPUSH_SYNTAX_ERROR_MESSAGE)
+                .hasMessageContaining(RPUSH_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }
 }

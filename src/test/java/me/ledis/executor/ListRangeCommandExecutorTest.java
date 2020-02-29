@@ -39,7 +39,7 @@ public class ListRangeCommandExecutorTest extends LedisTest {
     public void exception_should_be_thrown_when_syntax_is_incorrect() {
         executor = getFactory().createByCommand("LRANGE elements");
         assertThatThrownBy(() -> executor.execute())
-                .withFailMessage(LRANGE_SYNTAX_ERROR_MESSAGE)
+                .hasMessageContaining(LRANGE_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }
 
@@ -48,7 +48,7 @@ public class ListRangeCommandExecutorTest extends LedisTest {
         initSampleList();
         executor = getFactory().createByCommand("LRANGE elements zero two");
         assertThatThrownBy(() -> executor.execute())
-                .withFailMessage(LRANGE_NOT_INTEGER_ERROR_MESSAGE)
+                .hasMessageContaining(LRANGE_NOT_INTEGER_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }
 
@@ -57,9 +57,9 @@ public class ListRangeCommandExecutorTest extends LedisTest {
         Set<String> mySet = new HashSet<>();
         mySet.add("one");
         LedisData.set("mySet", mySet);
-        executor = getFactory().createByCommand("LRANGE mySet");
+        executor = getFactory().createByCommand("LRANGE mySet 0 1");
         assertThatThrownBy(() -> executor.execute())
-                .withFailMessage(KEY_IS_NOT_LIST_ERROR_MESSAGE)
+                .hasMessageContaining(KEY_IS_NOT_LIST_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }
 }

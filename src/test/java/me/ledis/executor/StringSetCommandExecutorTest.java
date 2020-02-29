@@ -34,16 +34,16 @@ public class StringSetCommandExecutorTest extends LedisTest {
         executor = getFactory().createByCommand("Set");
         assertThatThrownBy(() -> executor.execute())
                 .isInstanceOf(ResponseStatusException.class)
-                .withFailMessage(STRING_SET_SYNTAX_ERROR_MESSAGE);
+                .hasMessageContaining(STRING_SET_SYNTAX_ERROR_MESSAGE);
 
         executor = getFactory().createByCommand("set bad");
         assertThatThrownBy(() -> executor.execute())
                 .isInstanceOf(ResponseStatusException.class)
-                .withFailMessage(STRING_SET_SYNTAX_ERROR_MESSAGE);
+                .hasMessageContaining(STRING_SET_SYNTAX_ERROR_MESSAGE);
 
         executor = getFactory().createByCommand("set bad bad bad");
         assertThatThrownBy(() -> executor.execute())
                 .isInstanceOf(ResponseStatusException.class)
-                .withFailMessage(STRING_SET_SYNTAX_ERROR_MESSAGE);
+                .hasMessageContaining(STRING_SET_SYNTAX_ERROR_MESSAGE);
     }
 }

@@ -34,7 +34,7 @@ public class SetAddCommandExecutorTest extends LedisTest {
     public void exception_should_be_thrown_when_syntax_is_incorrect() {
         executor = getFactory().createByCommand("SADD mySet");
         assertThatThrownBy(() -> executor.execute())
-                .withFailMessage(SADD_SYNTAX_ERROR_MESSAGE)
+                .hasMessageContaining(SADD_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }
 
@@ -43,7 +43,7 @@ public class SetAddCommandExecutorTest extends LedisTest {
         initSampleList();
         executor = getFactory().createByCommand("SADD elements one");
         assertThatThrownBy(() -> executor.execute())
-                .withFailMessage(KEY_IS_NOT_SET_ERROR_MESSAGE)
+                .hasMessageContaining(KEY_IS_NOT_SET_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }
 }
