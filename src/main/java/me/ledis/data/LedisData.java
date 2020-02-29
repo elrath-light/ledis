@@ -1,13 +1,14 @@
 package me.ledis.data;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import static me.ledis.constant.ResponseMessage.RESTORE_ERROR_MESSAGE;
 import static me.ledis.constant.ResponseMessage.SAVE_ERROR_MESSAGE;
@@ -19,6 +20,7 @@ public class LedisData {
     }
 
     private static Map<String, Object> data = new HashMap<>();
+    private static Map<String, LocalDateTime> keyExpireTime = new HashMap<>();
 
     public static Object get(String key) {
         return data.get(key);
@@ -80,5 +82,25 @@ public class LedisData {
 
     public static Object remove(String key) {
         return data.remove(key);
+    }
+
+    public static void setExpireTime(String key, LocalDateTime dateTime) {
+        keyExpireTime.put(key, dateTime);
+    }
+
+    public static LocalDateTime getExpireTime(String key) {
+        return keyExpireTime.get(key);
+    }
+
+    public static void removeExpireTime(String key) {
+        keyExpireTime.remove(key);
+    }
+
+    public static boolean hasNoExpireTimeSet() {
+        return keyExpireTime.isEmpty();
+    }
+
+    public static Set<String> getAllKeyWithTimeout() {
+        return keyExpireTime.keySet();
     }
 }

@@ -20,12 +20,16 @@ public final class ResponseMessage {
     public static final String DEL_SYNTAX_ERROR_MESSAGE = "ERROR: the correct syntax is DEL <key>";
     public static final String KEYS_SYNTAX_ERROR_MESSAGE = "ERROR: the correct syntax is KEYS";
     public static final String FLUSHDB_SYNTAX_ERROR_MESSAGE = "ERROR: the correct syntax is FLUSHDB";
+    public static final String TIMEOUT_NOT_LONG_OR_INT_ERROR_MESSAGE = "ERROR: timeout must be a long or integer number";
+    public static final String EXPIRE_SYNTAX_ERROR_MESSAGE = "ERROR: the correct syntax is EXPIRE <key> <timeout_in_seconds>";
+    public static final String TTL_SYNTAX_ERROR_MESSAGE = "ERROR: the correct syntax is TTL <key>";
     public static final String UNSUPPORTED_COMMAND_MESSAGE = "ERROR: %s is not a supported command";
     public static final String SAVE_ERROR_MESSAGE = "ERROR: Unexpected error while saving state";
     public static final String RESTORE_ERROR_MESSAGE = "ERROR: Unexpected error while loading last saved state";
     public static final String KEY_IS_NOT_LIST_ERROR_MESSAGE = "ERROR: The given key is not a list";
     public static final String KEY_IS_NOT_SET_ERROR_MESSAGE = "ERROR: The given key is not a set";
     public static final String KEY_IS_NOT_EXISTED_MESSAGE = "Key is not existed";
+    public static final String KEY_WILL_BE_REMOVED_AT_MESSAGE = "Key will be removed at %s";
     private ResponseMessage() {
     }
 }
