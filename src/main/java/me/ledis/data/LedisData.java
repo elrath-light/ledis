@@ -56,7 +56,7 @@ public class LedisData {
     }
 
     private static File createOrGetSnapshot() {
-        String backupFolderPath = "I:/backup";
+        String backupFolderPath = System.getProperty("user.home") + "/ledis_backup";
         String snapshotPath = backupFolderPath + "/snapshot.ledis";
         try {
             File directory = new File(backupFolderPath);
@@ -67,9 +67,8 @@ public class LedisData {
             snapshot.createNewFile();
             return snapshot;
         } catch (IOException ex) {
-
+            throw new ResponseStatusException(INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
         }
-        return null;
     }
 
     public static void clear() {
