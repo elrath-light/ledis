@@ -1,5 +1,9 @@
 package me.ledis.executor;
 
+import me.ledis.data.LedisData;
+
+import static me.ledis.constant.ResponseMessage.OK_MESSAGE;
+
 public class SnapshotSaveCommandExecutor extends CommandExecutor {
     public SnapshotSaveCommandExecutor(String[] commandSegments) {
         super(commandSegments);
@@ -7,6 +11,7 @@ public class SnapshotSaveCommandExecutor extends CommandExecutor {
 
     @Override
     public String execute() {
-        return null;
+        LedisData.saveCurrentState();
+        return OK_MESSAGE;
     }
 }

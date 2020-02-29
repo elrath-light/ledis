@@ -1,10 +1,17 @@
 package me.ledis.data;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+
+import static me.ledis.constant.ResponseMessage.RESTORE_ERROR_MESSAGE;
+import static me.ledis.constant.ResponseMessage.SAVE_ERROR_MESSAGE;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 public class LedisData {
 
@@ -29,12 +36,12 @@ public class LedisData {
         ) {
             oOutStream.writeObject(data);
         } catch (Exception ex) {
-
+            throw new ResponseStatusException(INTERNAL_SERVER_ERROR, SAVE_ERROR_MESSAGE);
         }
     }
 
     @SuppressWarnings("unchecked")
-    public static void loadSavedSnapshot() {
+    public static void loadLastSavedSnapshot() {
         File savedSnapShot = createOrGetSnapshot();
         try (
                 FileInputStream fInStream = new FileInputStream(savedSnapShot);
@@ -42,9 +49,8 @@ public class LedisData {
         ) {
             LedisData.data = (Map<String, Object>) oInStream.readObject();
         } catch (Exception ex) {
-
+            throw new ResponseStatusException(INTERNAL_SERVER_ERROR, RESTORE_ERROR_MESSAGE);
         }
-        System.out.println();
     }
 
     private static File createOrGetSnapshot() {
