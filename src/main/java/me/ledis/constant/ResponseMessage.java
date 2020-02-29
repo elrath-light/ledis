@@ -17,9 +17,11 @@ public final class ResponseMessage {
     public static final String SMEMBERS_SYNTAX_ERROR_MESSAGE = "ERROR: the correct syntax is SMEMBERS <key>";
     public static final String SINTER_SYNTAX_ERROR_MESSAGE = "ERROR: the correct syntax is SINTER <key>";
     public static final String SREM_SYNTAX_ERROR_MESSAGE = "ERROR: the correct syntax is SREM <key> <value1> <value2>...";
+    public static final String DEL_SYNTAX_ERROR_MESSAGE = "ERROR: the correct syntax is DEL <key>";
     public static final String KEYS_SYNTAX_ERROR_MESSAGE = "ERROR: the correct syntax is KEYS";
     public static final String KEY_IS_NOT_LIST_ERROR_MESSAGE = "ERROR: The given key is not a list";
     public static final String KEY_IS_NOT_SET_ERROR_MESSAGE = "ERROR: The given key is not a set";
+    public static final String KEY_IS_NOT_EXISTED_MESSAGE = "Key is not existed";
     private ResponseMessage() {
     }
 }

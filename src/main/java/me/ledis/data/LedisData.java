@@ -71,4 +71,8 @@ public class LedisData {
     public static Object[] getAllKeys() {
         return data.keySet().toArray();
     }
+
+    public static Object remove(String key) {
+        return data.remove(key);
+    }
 }
