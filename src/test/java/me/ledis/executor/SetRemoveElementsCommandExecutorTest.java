@@ -7,7 +7,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Set;
 
-import static me.ledis.constant.ResponseMessage.*;
+import static me.ledis.constant.ResponseMessage.KEY_IS_NOT_SET_ERROR_MESSAGE;
+import static me.ledis.constant.ResponseMessage.SREM_SYNTAX_ERROR_MESSAGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -31,8 +32,7 @@ public class SetRemoveElementsCommandExecutorTest extends LedisTest {
 
     @Test
     public void exception_should_be_thrown_when_syntax_is_incorrect() {
-        executor = getFactory().createByCommand("SREM mySet");
-        assertThatThrownBy(() -> executor.execute())
+        assertThatThrownBy(() -> getFactory().createByCommand("SREM mySet"))
                 .hasMessageContaining(SREM_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }

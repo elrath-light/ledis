@@ -18,9 +18,6 @@ public class ListPollFirstCommandExecutor extends CommandExecutor {
     @Override
     @SuppressWarnings("unchecked")
     public String execute() {
-        if (getCommandSegments().length != 2) {
-            throw new ResponseStatusException(BAD_REQUEST, LPOP_SYNTAX_ERROR_MESSAGE);
-        }
         String key = getCommandSegments()[1];
         Object value = LedisData.get(key);
         if (value == null) {
@@ -32,5 +29,12 @@ public class ListPollFirstCommandExecutor extends CommandExecutor {
         }
         LinkedList<String> values = (LinkedList<String>) value;
         return values.pollFirst();
+    }
+
+    @Override
+    public void validateSyntax() {
+        if (getCommandSegments().length != 2) {
+            throw new ResponseStatusException(BAD_REQUEST, LPOP_SYNTAX_ERROR_MESSAGE);
+        }
     }
 }

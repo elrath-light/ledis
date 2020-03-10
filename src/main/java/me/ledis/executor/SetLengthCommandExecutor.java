@@ -1,7 +1,6 @@
 package me.ledis.executor;
 
 import me.ledis.data.LedisData;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Set;
@@ -18,9 +17,6 @@ public class SetLengthCommandExecutor extends CommandExecutor {
     @Override
     @SuppressWarnings("unchecked")
     public String execute() {
-        if (getCommandSegments().length != 2) {
-            throw new ResponseStatusException(BAD_REQUEST, SCARD_SYNTAX_ERROR_MESSAGE);
-        }
         String key = getCommandSegments()[1];
         Object value = LedisData.get(key);
         if (value == null) {
@@ -32,5 +28,12 @@ public class SetLengthCommandExecutor extends CommandExecutor {
         }
         Set<String> values = (Set<String>) value;
         return String.valueOf(values.size());
+    }
+
+    @Override
+    public void validateSyntax() {
+        if (getCommandSegments().length != 2) {
+            throw new ResponseStatusException(BAD_REQUEST, SCARD_SYNTAX_ERROR_MESSAGE);
+        }
     }
 }

@@ -17,9 +17,6 @@ public class SetGetAllCommandExecutor extends CommandExecutor {
     @Override
     @SuppressWarnings("unchecked")
     public String execute() {
-        if (getCommandSegments().length != 2) {
-            throw new ResponseStatusException(BAD_REQUEST, SMEMBERS_SYNTAX_ERROR_MESSAGE);
-        }
         String key = getCommandSegments()[1];
         Object value = LedisData.get(key);
         if (value == null) {
@@ -31,5 +28,12 @@ public class SetGetAllCommandExecutor extends CommandExecutor {
         }
         Set<String> values = (Set<String>) value;
         return Arrays.deepToString(values.toArray());
+    }
+
+    @Override
+    public void validateSyntax() {
+        if (getCommandSegments().length != 2) {
+            throw new ResponseStatusException(BAD_REQUEST, SMEMBERS_SYNTAX_ERROR_MESSAGE);
+        }
     }
 }

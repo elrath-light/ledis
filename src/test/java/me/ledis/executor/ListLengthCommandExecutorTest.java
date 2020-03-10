@@ -48,13 +48,11 @@ public class ListLengthCommandExecutorTest extends LedisTest {
 
     @Test
     public void exception_should_be_thrown_when_syntax_is_incorrect() {
-        executor = getFactory().createByCommand("LLEN a b");
-        assertThatThrownBy(() -> executor.execute())
+        assertThatThrownBy(() -> getFactory().createByCommand("LLEN a b"))
                 .hasMessageContaining(LLEN_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
 
-        executor = getFactory().createByCommand("LLEN");
-        assertThatThrownBy(() -> executor.execute())
+        assertThatThrownBy(() -> getFactory().createByCommand("LLEN"))
                 .hasMessageContaining(LLEN_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }

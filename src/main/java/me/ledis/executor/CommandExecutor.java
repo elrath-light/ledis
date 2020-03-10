@@ -5,9 +5,11 @@ public abstract class CommandExecutor {
 
     protected CommandExecutor(String[] commandSegments) {
         this.commandSegments = commandSegments;
+        validateSyntax();
     }
 
     public abstract String execute();
+    public abstract void validateSyntax();
 
     protected String[] getCommandSegments() {
         return commandSegments;

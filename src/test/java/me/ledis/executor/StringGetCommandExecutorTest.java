@@ -10,28 +10,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class StringGetCommandExecutorTest extends LedisTest {
-    private CommandExecutor getCommandExecutor;
     @Test
     public void string_should_be_retrieved_correctly() {
         LedisData.set("you", "Good");
-        getCommandExecutor = getFactory().createByCommand("GET you");
-        assertThat(getCommandExecutor.execute())
+        CommandExecutor executor = getFactory().createByCommand("GET you");
+        assertThat(executor.execute())
                 .isEqualTo("Good");
 
-        getCommandExecutor = getFactory().createByCommand("GET non-existent");
-        assertThat(getCommandExecutor.execute())
+        executor = getFactory().createByCommand("GET non-existent");
+        assertThat(executor.execute())
                 .isNull();
     }
 
     @Test
     public void exception_should_be_thrown_when_syntax_is_incorrect() {
-        getCommandExecutor = getFactory().createByCommand("GET a b");
-        assertThatThrownBy(() -> getCommandExecutor.execute())
+        assertThatThrownBy(() -> getFactory().createByCommand("GET a b"))
                 .hasMessageContaining(STRING_GET_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
 
-        getCommandExecutor = getFactory().createByCommand("GET");
-        assertThatThrownBy(() -> getCommandExecutor.execute())
+        assertThatThrownBy(() -> getFactory().createByCommand("GET"))
                 .hasMessageContaining(STRING_GET_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }

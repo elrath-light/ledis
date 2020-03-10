@@ -6,6 +6,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.StringJoiner;
 
+import static me.ledis.constant.ResponseMessage.STRING_SET_SYNTAX_ERROR_MESSAGE;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 public class StringSetCommandExecutor extends CommandExecutor {
@@ -15,9 +16,6 @@ public class StringSetCommandExecutor extends CommandExecutor {
 
     @Override
     public String execute() {
-        if (getCommandSegments().length < 3) {
-            throw new ResponseStatusException(BAD_REQUEST, "Syntax ERROR: the correct syntax is SET <key> <value>");
-        }
         String key = getCommandSegments()[1];
         StringJoiner joiner = new StringJoiner(StringUtils.SPACE);
         for (int i = 2; i < getCommandSegments().length; i++) {
@@ -25,5 +23,12 @@ public class StringSetCommandExecutor extends CommandExecutor {
         }
         LedisData.set(key, joiner.toString());
         return "OK";
+    }
+
+    @Override
+    public void validateSyntax() {
+        if (getCommandSegments().length < 3) {
+            throw new ResponseStatusException(BAD_REQUEST, STRING_SET_SYNTAX_ERROR_MESSAGE);
+        }
     }
 }

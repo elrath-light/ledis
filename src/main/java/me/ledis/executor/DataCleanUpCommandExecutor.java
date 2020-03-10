@@ -14,11 +14,15 @@ public class DataCleanUpCommandExecutor extends CommandExecutor {
 
     @Override
     public String execute() {
-        if (getCommandSegments().length != 1) {
-            throw new ResponseStatusException(BAD_REQUEST, FLUSHDB_SYNTAX_ERROR_MESSAGE);
-        }
         LedisData.clear();
         LedisData.clearAllExpireTime();
         return OK_MESSAGE;
+    }
+
+    @Override
+    public void validateSyntax() {
+        if (getCommandSegments().length != 1) {
+            throw new ResponseStatusException(BAD_REQUEST, FLUSHDB_SYNTAX_ERROR_MESSAGE);
+        }
     }
 }

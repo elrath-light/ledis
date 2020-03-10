@@ -34,8 +34,7 @@ public class SetGetAllCommandExecutorTest extends LedisTest {
 
     @Test
     public void exception_should_be_thrown_when_syntax_is_incorrect() {
-        executor = getFactory().createByCommand("SMEMBERS a b");
-        assertThatThrownBy(() -> executor.execute())
+        assertThatThrownBy(() -> getFactory().createByCommand("SMEMBERS a b"))
                 .hasMessageContaining(SMEMBERS_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }

@@ -17,9 +17,6 @@ public class SetRemoveElementsCommandExecutor extends CommandExecutor {
     @Override
     @SuppressWarnings("unchecked")
     public String execute() {
-        if (getCommandSegments().length < 3) {
-            throw new ResponseStatusException(BAD_REQUEST, SREM_SYNTAX_ERROR_MESSAGE);
-        }
         String key = getCommandSegments()[1];
         Object value = LedisData.get(key);
         if (value == null) {
@@ -43,5 +40,12 @@ public class SetRemoveElementsCommandExecutor extends CommandExecutor {
         LedisData.set(key, values);
         int postRemoveElementsCount = values.size();
         return String.valueOf(preRemoveElementsCount - postRemoveElementsCount);
+    }
+
+    @Override
+    public void validateSyntax() {
+        if (getCommandSegments().length < 3) {
+            throw new ResponseStatusException(BAD_REQUEST, SREM_SYNTAX_ERROR_MESSAGE);
+        }
     }
 }

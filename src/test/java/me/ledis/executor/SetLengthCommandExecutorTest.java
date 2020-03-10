@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class SetLengthCommandExecutorTest extends LedisTest {
     private CommandExecutor executor;
+
     @Test
     public void length_of_set_should_be_retrieved_correctly() {
         initSampleSet();
@@ -37,8 +38,7 @@ public class SetLengthCommandExecutorTest extends LedisTest {
 
     @Test
     public void exception_should_be_thrown_when_syntax_is_incorrect() {
-        executor = getFactory().createByCommand("SCARD a b");
-        assertThatThrownBy(() -> executor.execute())
+        assertThatThrownBy(() -> getFactory().createByCommand("SCARD a b"))
                 .hasMessageContaining(SCARD_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }

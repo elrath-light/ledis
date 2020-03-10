@@ -15,9 +15,13 @@ public class DataGetAllKeysCommandExecutor extends CommandExecutor {
 
     @Override
     public String execute() {
+        return Arrays.deepToString(LedisData.getAllKeys());
+    }
+
+    @Override
+    public void validateSyntax() {
         if (getCommandSegments().length != 1) {
             throw new ResponseStatusException(BAD_REQUEST, KEYS_SYNTAX_ERROR_MESSAGE);
         }
-        return Arrays.deepToString(LedisData.getAllKeys());
     }
 }

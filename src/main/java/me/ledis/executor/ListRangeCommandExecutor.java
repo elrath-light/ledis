@@ -18,9 +18,6 @@ public class ListRangeCommandExecutor extends CommandExecutor {
     @Override
     @SuppressWarnings("unchecked")
     public String execute() {
-        if (getCommandSegments().length != 4) {
-            throw new ResponseStatusException(BAD_REQUEST, LRANGE_SYNTAX_ERROR_MESSAGE);
-        }
         String key = getCommandSegments()[1];
         Object value = LedisData.get(key);
         if (value == null) {
@@ -51,5 +48,12 @@ public class ListRangeCommandExecutor extends CommandExecutor {
             result.add(currentValue);
         }
         return Arrays.deepToString(result.toArray());
+    }
+
+    @Override
+    public void validateSyntax() {
+        if (getCommandSegments().length != 4) {
+            throw new ResponseStatusException(BAD_REQUEST, LRANGE_SYNTAX_ERROR_MESSAGE);
+        }
     }
 }

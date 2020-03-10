@@ -13,11 +13,15 @@ public class StringGetCommandExecutor extends CommandExecutor {
 
     @Override
     public String execute() {
-        if (getCommandSegments().length != 2) {
-            throw new ResponseStatusException(BAD_REQUEST, STRING_GET_SYNTAX_ERROR_MESSAGE);
-        }
         String key = getCommandSegments()[1];
         Object value = LedisData.get(key);
         return value == null ? null : value.toString();
+    }
+
+    @Override
+    public void validateSyntax() {
+        if (getCommandSegments().length != 2) {
+            throw new ResponseStatusException(BAD_REQUEST, STRING_GET_SYNTAX_ERROR_MESSAGE);
+        }
     }
 }

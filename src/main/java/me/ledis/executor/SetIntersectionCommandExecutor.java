@@ -17,9 +17,6 @@ public class SetIntersectionCommandExecutor extends CommandExecutor {
 
     @Override
     public String execute() {
-        if (getCommandSegments().length < 2) {
-            throw new ResponseStatusException(BAD_REQUEST, SINTER_SYNTAX_ERROR_MESSAGE);
-        }
         String key = getCommandSegments()[1];
         Object value = LedisData.get(key);
         Set<String> intersectionSet = safeCast(value);
@@ -41,5 +38,12 @@ public class SetIntersectionCommandExecutor extends CommandExecutor {
             throw new ResponseStatusException(BAD_REQUEST, KEY_IS_NOT_SET_ERROR_MESSAGE);
         }
         return (Set<String>) value;
+    }
+
+    @Override
+    public void validateSyntax() {
+        if (getCommandSegments().length < 2) {
+            throw new ResponseStatusException(BAD_REQUEST, SINTER_SYNTAX_ERROR_MESSAGE);
+        }
     }
 }

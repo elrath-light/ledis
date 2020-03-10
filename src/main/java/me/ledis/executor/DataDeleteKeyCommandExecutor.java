@@ -13,12 +13,16 @@ public class DataDeleteKeyCommandExecutor extends CommandExecutor {
 
     @Override
     public String execute() {
-        if (getCommandSegments().length != 2) {
-            throw new ResponseStatusException(BAD_REQUEST, DEL_SYNTAX_ERROR_MESSAGE);
-        }
         String key = getCommandSegments()[1];
         Object removedValue = LedisData.remove(key);
         LedisData.removeExpireTime(key);
         return removedValue == null ? KEY_IS_NOT_EXISTED_MESSAGE : OK_MESSAGE;
+    }
+
+    @Override
+    public void validateSyntax() {
+        if (getCommandSegments().length != 2) {
+            throw new ResponseStatusException(BAD_REQUEST, DEL_SYNTAX_ERROR_MESSAGE);
+        }
     }
 }

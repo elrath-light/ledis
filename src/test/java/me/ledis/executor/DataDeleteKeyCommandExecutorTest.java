@@ -39,12 +39,10 @@ public class DataDeleteKeyCommandExecutorTest extends LedisTest {
 
     @Test
     public void exception_should_be_thrown_when_syntax_is_incorrect() {
-        executor = getFactory().createByCommand("DEL a b");
-        assertThatThrownBy(() -> executor.execute())
+        assertThatThrownBy(() -> getFactory().createByCommand("DEL a b"))
                 .hasMessageContaining(DEL_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
-        executor = getFactory().createByCommand("DEL");
-        assertThatThrownBy(() -> executor.execute())
+        assertThatThrownBy(() -> getFactory().createByCommand("DEL"))
                 .hasMessageContaining(DEL_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }

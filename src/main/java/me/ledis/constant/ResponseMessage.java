@@ -23,6 +23,8 @@ public final class ResponseMessage {
     public static final String TIMEOUT_NOT_LONG_OR_INT_ERROR_MESSAGE = "ERROR: timeout must be a long or integer number";
     public static final String EXPIRE_SYNTAX_ERROR_MESSAGE = "ERROR: the correct syntax is EXPIRE <key> <timeout_in_seconds>";
     public static final String TTL_SYNTAX_ERROR_MESSAGE = "ERROR: the correct syntax is TTL <key>";
+    public static final String SAVE_SYNTAX_ERROR_MESSAGE = "ERROR: the correct syntax is SAVE";
+    public static final String RESTORE_SYNTAX_ERROR_MESSAGE = "ERROR: the correct syntax is RESTORE";
     public static final String UNSUPPORTED_COMMAND_MESSAGE = "ERROR: %s is not a supported command";
     public static final String SAVE_ERROR_MESSAGE = "ERROR: Unexpected error while saving state";
     public static final String RESTORE_ERROR_MESSAGE = "ERROR: Unexpected error while loading last saved state";

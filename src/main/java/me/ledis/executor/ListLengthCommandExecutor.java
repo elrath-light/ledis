@@ -17,9 +17,6 @@ public class ListLengthCommandExecutor extends CommandExecutor {
 
     @Override
     public String execute() {
-        if (getCommandSegments().length != 2) {
-            throw new ResponseStatusException(BAD_REQUEST, LLEN_SYNTAX_ERROR_MESSAGE);
-        }
         String key = getCommandSegments()[1];
         Object value = LedisData.get(key);
         if (value == null) {
@@ -31,5 +28,12 @@ public class ListLengthCommandExecutor extends CommandExecutor {
         }
         List<?> values = (List<?>) value;
         return String.valueOf(values.size());
+    }
+
+    @Override
+    public void validateSyntax() {
+        if (getCommandSegments().length != 2) {
+            throw new ResponseStatusException(BAD_REQUEST, LLEN_SYNTAX_ERROR_MESSAGE);
+        }
     }
 }

@@ -1,6 +1,6 @@
 package me.ledis.controller;
 
-import me.ledis.CommandService;
+import me.ledis.service.CommandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

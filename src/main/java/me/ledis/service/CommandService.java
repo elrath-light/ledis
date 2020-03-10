@@ -1,4 +1,4 @@
-package me.ledis;
+package me.ledis.service;
 
 import me.ledis.executor.CommandExecutor;
 import me.ledis.factory.CommandExecutorFactory;

@@ -2,7 +2,6 @@ package me.ledis.executor;
 
 import me.ledis.LedisTest;
 import me.ledis.data.LedisData;
-import me.ledis.factory.CommandExecutorFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -13,11 +12,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class StringSetCommandExecutorTest extends LedisTest {
 
-    private CommandExecutor executor;
     @Test
     public void string_should_be_stored_and_overridden_correctly() {
         String command = "   set          me     Good    ";
-        executor = getFactory().createByCommand(command);
+        CommandExecutor executor = getFactory().createByCommand(command);
         assertThat(executor.execute()).isEqualTo(OK_MESSAGE);
         Object me = LedisData.get("me");
         assertThat(me).isInstanceOf(String.class);
@@ -31,13 +29,11 @@ public class StringSetCommandExecutorTest extends LedisTest {
 
     @Test
     public void exception_should_be_thrown_when_syntax_is_incorrect() {
-        executor = getFactory().createByCommand("Set");
-        assertThatThrownBy(() -> executor.execute())
+        assertThatThrownBy(() -> getFactory().createByCommand("Set"))
                 .isInstanceOf(ResponseStatusException.class)
                 .hasMessageContaining(STRING_SET_SYNTAX_ERROR_MESSAGE);
 
-        executor = getFactory().createByCommand("set bad");
-        assertThatThrownBy(() -> executor.execute())
+        assertThatThrownBy(() -> getFactory().createByCommand("set bad"))
                 .isInstanceOf(ResponseStatusException.class)
                 .hasMessageContaining(STRING_SET_SYNTAX_ERROR_MESSAGE);
     }

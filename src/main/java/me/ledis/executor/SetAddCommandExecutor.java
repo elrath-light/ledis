@@ -18,9 +18,6 @@ public class SetAddCommandExecutor extends CommandExecutor {
     @Override
     @SuppressWarnings("unchecked")
     public String execute() {
-        if (getCommandSegments().length < 3) {
-            throw new ResponseStatusException(BAD_REQUEST, SADD_SYNTAX_ERROR_MESSAGE);
-        }
         String key = getCommandSegments()[1];
         Object value = LedisData.get(key);
         if (value == null) {
@@ -44,5 +41,12 @@ public class SetAddCommandExecutor extends CommandExecutor {
         LedisData.set(key, values);
         int postAddElementsCount = values.size();
         return String.valueOf(postAddElementsCount - preAddElementsCount);
+    }
+
+    @Override
+    public void validateSyntax() {
+        if (getCommandSegments().length < 3) {
+            throw new ResponseStatusException(BAD_REQUEST, SADD_SYNTAX_ERROR_MESSAGE);
+        }
     }
 }

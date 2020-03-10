@@ -18,9 +18,6 @@ public class ListAddCommandExecutor extends CommandExecutor {
     @Override
     @SuppressWarnings("unchecked")
     public String execute() {
-        if (getCommandSegments().length < 3) {
-            throw new ResponseStatusException(BAD_REQUEST, RPUSH_SYNTAX_ERROR_MESSAGE);
-        }
         String key = getCommandSegments()[1];
         Object value = LedisData.get(key);
         if (value == null) {
@@ -32,6 +29,13 @@ public class ListAddCommandExecutor extends CommandExecutor {
         }
         List<String> existingValues = (List<String>) value;
         return addElements(existingValues);
+    }
+
+    @Override
+    public void validateSyntax() {
+        if (getCommandSegments().length < 3) {
+            throw new ResponseStatusException(BAD_REQUEST, RPUSH_SYNTAX_ERROR_MESSAGE);
+        }
     }
 
     private String addElements(List<String> values) {

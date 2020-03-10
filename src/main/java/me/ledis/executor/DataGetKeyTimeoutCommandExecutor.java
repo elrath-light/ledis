@@ -15,9 +15,6 @@ public class DataGetKeyTimeoutCommandExecutor extends CommandExecutor {
 
     @Override
     public String execute() {
-        if (getCommandSegments().length != 2) {
-            throw new ResponseStatusException(BAD_REQUEST, TTL_SYNTAX_ERROR_MESSAGE);
-        }
         String key = getCommandSegments()[1];
         if (LedisData.get(key) == null) {
             return KEY_IS_NOT_EXISTED_MESSAGE;
@@ -27,5 +24,12 @@ public class DataGetKeyTimeoutCommandExecutor extends CommandExecutor {
             return NO_TIMEOUT_MESSAGE;
         }
         return String.format(KEY_WILL_BE_REMOVED_AT_MESSAGE, expireTime);
+    }
+
+    @Override
+    public void validateSyntax() {
+        if (getCommandSegments().length != 2) {
+            throw new ResponseStatusException(BAD_REQUEST, TTL_SYNTAX_ERROR_MESSAGE);
+        }
     }
 }

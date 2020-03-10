@@ -38,12 +38,10 @@ public class DataGetKeyTimeoutCommandExecutorTest extends LedisTest {
 
     @Test
     public void exception_should_be_thrown_when_syntax_is_incorrect() {
-        executor = getFactory().createByCommand("TTL a b");
-        assertThatThrownBy(() -> executor.execute())
+        assertThatThrownBy(() -> getFactory().createByCommand("TTL a b"))
                 .hasMessageContaining(TTL_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
-        executor = getFactory().createByCommand("TTL");
-        assertThatThrownBy(() -> executor.execute())
+        assertThatThrownBy(() -> getFactory().createByCommand("TTL"))
                 .hasMessageContaining(TTL_SYNTAX_ERROR_MESSAGE)
                 .isInstanceOf(ResponseStatusException.class);
     }
